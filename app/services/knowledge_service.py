@@ -104,7 +104,7 @@ class KnowledgeService:
         self.load()
         return "\n\n".join(chunk.formatted for chunk in self._chunks)
 
-    def search(self, query: str, top_k: int = 6) -> list[Chunk]:
+    def search(self, query: str, top_k: int = 3) -> list[Chunk]:
         """Return the most relevant chunks for a query using keyword overlap.
 
         This is a placeholder for a future embeddings-based similarity
@@ -135,10 +135,23 @@ class KnowledgeService:
             top = self._chunks[:top_k]
         return top
 
-    def build_context(self, query: str, top_k: int = 6) -> str:
-        """Build a context string for the AI prompt from relevant chunks."""
+    def build_context(self, query: str, top_k: int = 3, max_chars: int = 6000) -> str:
+        """Build a compact context string for the AI prompt from relevant chunks."""
         relevant = self.search(query, top_k=top_k)
-        return "\n\n".join(chunk.formatted for chunk in relevant)
+        parts: list[str] = []
+        current_chars = 0
+
+        for chunk in relevant:
+            formatted = chunk.formatted
+            if current_chars + len(formatted) > max_chars:
+                remaining = max_chars - current_chars
+                if remaining <= 0:
+                    break
+                formatted = formatted[:remaining].rstrip()
+            parts.append(formatted)
+            current_chars += len(formatted)
+
+        return "\n\n".join(parts)
 
 
 # Module-level singleton used by the rest of the app.

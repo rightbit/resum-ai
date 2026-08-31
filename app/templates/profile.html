@@ -42,6 +42,9 @@
                     </div>
                     {% endfor %}
                 </div>
+                <div id="chat-status" class="text-muted small mt-2" aria-live="polite" hidden>
+                    Give me a moment, I am doing some research <span id="chat-status-dots">.</span>
+                </div>
                 <form id="chat-form" class="d-flex gap-2">
                     <input type="text" id="chat-input" class="form-control" placeholder="e.g. Has Ryan worked with AI?" autocomplete="off" required>
                     <button type="submit" class="btn btn-primary">Send</button>
