@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard | ResumAI{% endblock %}
+{% block content %}
+<h1 class="fw-bold mb-4">Visitor Activity</h1>
+
+<form method="get" class="row g-2 mb-4">
+    <div class="col-md-3">
+        <input type="text" class="form-control" name="visitor_name" placeholder="Filter by visitor name" value="{{ filters.visitor_name }}">
+    </div>
+    <div class="col-md-3">
+        <input type="text" class="form-control" name="company" placeholder="Filter by company" value="{{ filters.company }}">
+    </div>
+    <div class="col-md-3">
+        <input type="date" class="form-control" name="visit_date" value="{{ filters.visit_date }}">
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-secondary w-100">Filter</button>
+    </div>
+    <div class="col-md-1">
+        <a href="/admin" class="btn btn-outline-secondary w-100">Reset</a>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Visitor</th>
+                <th>Company</th>
+                <th>Email</th>
+                <th>Visited</th>
+                <th># Questions</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+            <tr>
+                <td>{{ session.visitor_name }}</td>
+                <td>{{ session.company }}</td>
+                <td>{{ session.email or "—" }}</td>
+                <td>{{ session.started_at }}</td>
+                <td>{{ question_counts.get(session.id, 0) }}</td>
+                <td><a href="/admin/session/{{ session.id }}" class="btn btn-sm btn-outline-primary">View Conversation</a></td>
+            </tr>
+            {% else %}
+            <tr><td colspan="6" class="text-center text-muted">No visitor sessions yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

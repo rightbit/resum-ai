@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Welcome | ResumAI{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
+        <div class="text-center mb-4">
+            <h1 class="fw-bold">Explore My Professional Experience</h1>
+            <p class="text-muted">
+                Welcome! This site lets you explore my professional background,
+                work experience, skills, and projects through an AI assistant
+                that answers questions using my actual resume and career history.
+            </p>
+        </div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h2 class="h5 mb-3">Get Started</h2>
+                {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+                <form method="post" action="/register">
+                    <div class="mb-3">
+                        <label for="visitor_name" class="form-label">Name *</label>
+                        <input type="text" class="form-control" id="visitor_name" name="visitor_name" required maxlength="255">
+                    </div>
+                    <div class="mb-3">
+                        <label for="company" class="form-label">Company *</label>
+                        <input type="text" class="form-control" id="company" name="company" required maxlength="255">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email (optional)</label>
+                        <input type="email" class="form-control" id="email" name="email" maxlength="255">
+                    </div>
+                    <p class="form-text small text-muted">
+                        Your name, company, and any questions you ask will be stored
+                        so I can understand who has viewed my professional profile
+                        and what they were interested in. No sensitive information
+                        beyond this is collected.
+                    </p>
+                    <button type="submit" class="btn btn-primary w-100">View Profile &amp; Chat</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

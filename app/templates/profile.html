@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Profile | ResumAI{% endblock %}
+{% block content %}
+<div class="mb-4">
+    <h1 class="fw-bold">Hi {{ visitor.visitor_name }}, welcome!</h1>
+    <p class="text-muted">Ask the AI assistant below anything about my professional background, or browse the summary sections.</p>
+</div>
+
+<div class="row g-4">
+    <div class="col-lg-7">
+        {% macro section(title, chunks) %}
+        {% if chunks %}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="h5">{{ title }}</h2>
+                {% for chunk in chunks %}
+                <h3 class="h6 mt-3">{{ chunk.heading }}</h3>
+                <div class="chunk-text">{{ chunk.text }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endmacro %}
+
+        {{ section("Professional Summary", profile_chunks) }}
+        {{ section("Resume / Employment History", resume_chunks) }}
+        {{ section("Skills & Technologies", skills_chunks) }}
+        {{ section("Education", education_chunks) }}
+        {{ section("Projects & Leadership", projects_chunks + leadership_chunks) }}
+    </div>
+
+    <div class="col-lg-5">
+        <div class="card shadow-sm chat-card">
+            <div class="card-header">
+                <strong>Ask the AI Assistant</strong>
+            </div>
+            <div class="card-body d-flex flex-column">
+                <div id="chat-messages" class="chat-messages flex-grow-1 mb-3">
+                    {% for message in history %}
+                    <div class="chat-message chat-message-{{ message.role }}">
+                        <div class="chat-bubble">{{ message.content }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <form id="chat-form" class="d-flex gap-2">
+                    <input type="text" id="chat-input" class="form-control" placeholder="e.g. Has Ryan worked with AI?" autocomplete="off" required>
+                    <button type="submit" class="btn btn-primary">Send</button>
+                </form>
+                <div id="chat-error" class="text-danger small mt-2"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/chat.js"></script>
+{% endblock %}

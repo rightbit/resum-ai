@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Session Detail | ResumAI{% endblock %}
+{% block content %}
+<a href="/admin" class="btn btn-sm btn-outline-secondary mb-3">&larr; Back to dashboard</a>
+
+<h1 class="fw-bold">{{ visitor.visitor_name }} &mdash; {{ visitor.company }}</h1>
+<p class="text-muted">
+    Email: {{ visitor.email or "—" }} |
+    Visited: {{ visitor.started_at }} |
+    Last activity: {{ visitor.last_activity_at }}
+</p>
+
+<div class="card shadow-sm">
+    <div class="card-header"><strong>Conversation</strong></div>
+    <div class="card-body">
+        {% for message in messages %}
+        <div class="chat-message chat-message-{{ message.role }} mb-2">
+            <div class="fw-bold small text-uppercase text-muted">{{ message.role }}</div>
+            <div class="chat-bubble">{{ message.content }}</div>
+            <div class="text-muted small">{{ message.created_at }}</div>
+        </div>
+        {% else %}
+        <p class="text-muted">No conversation recorded for this session.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

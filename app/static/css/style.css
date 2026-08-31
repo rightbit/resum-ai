@@ -1,0 +1,48 @@
+body {
+    background-color: #f7f8fa;
+}
+
+.chat-card {
+    height: 100%;
+}
+
+.chat-messages {
+    max-height: 480px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.chat-message {
+    margin-bottom: 0.75rem;
+    display: flex;
+}
+
+.chat-message-user {
+    justify-content: flex-end;
+}
+
+.chat-message-assistant {
+    justify-content: flex-start;
+}
+
+.chat-bubble {
+    display: inline-block;
+    padding: 0.5rem 0.85rem;
+    border-radius: 0.75rem;
+    max-width: 90%;
+    white-space: pre-wrap;
+}
+
+.chat-message-user .chat-bubble {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.chat-message-assistant .chat-bubble {
+    background-color: #e9ecef;
+    color: #212529;
+}
+
+.chunk-text {
+    white-space: pre-wrap;
+}
